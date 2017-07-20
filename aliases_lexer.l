@@ -52,7 +52,7 @@ yyclean (void)
 
 <*>\n                           lineno++; BEGIN(INITIAL);
 
-<*>.                            yyerror("Unexpected character: '%c'", yytext[0]);
+<*>.                            yyerror("Unexpected character: '%c'", yytext[0]); exit(EXIT_FAILURE);
 
 %%
 

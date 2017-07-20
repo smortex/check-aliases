@@ -6,7 +6,7 @@ Feature: Check aliases
             bar,
             baz
       """
-    When I run `./check-aliases basic-example-1`
+    When I successfully run `./check-aliases basic-example-1`
     Then the output should contain exactly ""
   Scenario: Invalid syntax #1
     Given a file "invalid-example-1" with:
@@ -16,7 +16,8 @@ Feature: Check aliases
             baz
       """
     When I run `./check-aliases invalid-example-1`
-    Then the output should contain "syntax error"
+    Then the exit status should be 1
+    And the output should contain "syntax error"
   Scenario: Invalid syntax #2
     Given a file "invalid-example-2" with:
       """
@@ -24,4 +25,5 @@ Feature: Check aliases
       baz: moin
       """
     When I run `./check-aliases invalid-example-2`
-    Then the output should contain "syntax error"
+    Then the exit status should be 1
+    And the output should contain "syntax error"

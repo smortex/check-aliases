@@ -14,7 +14,10 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
 	add_definitions("-D_GNU_SOURCE")
 endif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
 
-add_executable(check-aliases main.c)
+add_executable(check-aliases main.c aliases_lexer.c aliases_parser.c)
+
+add_custom_command(COMMAND lex ARGS -oaliases_lexer.c aliases_lexer.l DEPENDS aliases_lexer.l OUTPUT aliases_lexer.c aliases_parser.h)
+add_custom_command(COMMAND yacc ARGS -d -v -o aliases_parser.c aliases_parser.y DEPENDS aliases_parser.y aliases_parser.h OUTPUT aliases_parser.c)
 
 add_custom_target(style DEPENDS style_fix_space style_astyle)
 add_custom_target(style_fix_space COMMAND find . -name '*.[ch]' -exec perl -pi -e 's/[ \\t]+$$//' '{}' '\\;' COMMENT "Fixing invalid space sequences")

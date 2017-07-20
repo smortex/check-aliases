@@ -1,5 +1,11 @@
+.bundle
 CMakeCache.txt
 CMakeFiles
+Gemfile.lock
 Makefile
-check-aliases
 cmake_install.cmake
+src/aliases_lexer.c
+src/aliases_parser.c
+src/aliases_parser.h
+src/aliases_parser.output
+tmp

@@ -72,7 +72,7 @@ yyerror(char *msg, ...)
     for (int i = 0; i < yytext - current_line_pos; i++)
         printf(" ");
     printf("\033[32;1m^");
-    for (unsigned int i = 1; i < yyleng; i++)
+    for (yy_size_t i = 1; i < yyleng; i++)
         printf("~");
     printf("\033[0m\n");
     return 0;

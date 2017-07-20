@@ -9,4 +9,4 @@ addons:
     packages:
       - cmake
 
-script: cmake -DCMAKE_BUILD_TYPE=Debug . && make
+script: cmake -DCMAKE_BUILD_TYPE=Debug . && make && bundle install --jobs=3 --retry=3 && bundle exec cucumber

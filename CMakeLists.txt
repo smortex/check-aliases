@@ -14,10 +14,12 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
 	add_definitions("-D_GNU_SOURCE")
 endif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
 
-add_executable(bin/check-aliases src/main.c src/aliases_lexer.c src/aliases_parser.c)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin ${CMAKE_CURRENT_BINARY_DIR}/src)
 
-add_custom_command(COMMAND lex ARGS -osrc/aliases_lexer.c src/aliases_lexer.l DEPENDS src/aliases_lexer.l OUTPUT src/aliases_lexer.c src/aliases_parser.h)
-add_custom_command(COMMAND yacc ARGS -d -v -o src/aliases_parser.c src/aliases_parser.y DEPENDS src/aliases_parser.y src/aliases_parser.h OUTPUT src/aliases_parser.c)
+add_executable(bin/check-aliases src/main.c ${CMAKE_CURRENT_BINARY_DIR}/src/aliases_lexer.c ${CMAKE_CURRENT_BINARY_DIR}/src/aliases_parser.c)
+
+add_custom_command(COMMAND lex ARGS -osrc/aliases_lexer.c ${CMAKE_CURRENT_SOURCE_DIR}/src/aliases_lexer.l DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/aliases_lexer.l OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/src/aliases_lexer.c ${CMAKE_CURRENT_BINARY_DIR}/src/aliases_parser.h)
+add_custom_command(COMMAND yacc ARGS -d -v -o src/aliases_parser.c ${CMAKE_CURRENT_SOURCE_DIR}/src/aliases_parser.y DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/aliases_parser.y ${CMAKE_CURRENT_BINARY_DIR}/src/aliases_parser.h OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/src/aliases_parser.c)
 
 add_custom_target(style DEPENDS style_fix_space style_astyle)
 add_custom_target(style_fix_space COMMAND find src -name '*.[ch]' -exec perl -pi -e 's/[ \\t]+$$//' '{}' '\\;' COMMENT "Fixing invalid space sequences")

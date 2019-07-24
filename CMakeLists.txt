@@ -10,6 +10,14 @@ endif(NOT CMAKE_BUILD_TYPE)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Wextra")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0 -Werror")
 
+# FIXME: Workaround for CI:
+# src/aliases_lexer.c:1125:44: error: comparison of integers of different signs:
+#       'int' and 'yy_size_t' (aka 'unsigned long') [-Werror,-Wsign-compare]
+#   ...(int) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+#      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 1 error generated.
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wno-error=sign-compare")
+
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
 	add_definitions("-D_GNU_SOURCE")
 endif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")

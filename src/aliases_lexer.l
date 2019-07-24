@@ -12,20 +12,20 @@ extern const char *aliases_filename;
 static char *current_line;
 static char *current_line_pos;
 
-void                                                                                                                          
-update_curent_line (void)                                                                                                     
-{                                                                                                                             
-    free (current_line);                                                                                                      
-    current_line = strdup (yytext);                                                                                           
-    current_line_pos = yytext;                                                                                                
-}                                                                                                                             
-                                                                                                                              
-void                                                                                                                          
-yyclean (void)                                                                                                                
-{                                                                                                                             
-    free (current_line);                                                                                                      
-    current_line = NULL;                                                                                                      
-}                                                                                                                             
+void
+update_curent_line (void)
+{
+    free (current_line);
+    current_line = strdup (yytext);
+    current_line_pos = yytext;
+}
+
+void
+yyclean (void)
+{
+    free (current_line);
+    current_line = NULL;
+}
 
 %}
 
